@@ -13,7 +13,14 @@ echo "🦐 Starting Iseebi setup (UV Mode)..."
 if ! command -v uv &> /dev/null; then
     echo "📦 Installing 'uv' package manager..."
     curl -LsSf https://astral.sh/uv/install.sh | sh
-    source $HOME/.cargo/env
+    # Standard uv installer location
+    if [ -f "$HOME/.local/bin/env" ]; then
+        source "$HOME/.local/bin/env"
+    elif [ -f "$HOME/.cargo/env" ]; then
+        source "$HOME/.cargo/env"
+    fi
+    # Force add to PATH just in case sourcing fails in some shells
+    export PATH="$HOME/.local/bin:$PATH"
 fi
 
 # 2. Clone Official Repository if missing

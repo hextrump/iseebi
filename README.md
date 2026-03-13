@@ -32,7 +32,7 @@ Execute these steps on your fresh VPS. This method uses `uv` for ultra-fast envi
 ```bash
 # 1. Install 'uv' (Fastest way to get Python/Pip environment)
 curl -LsSf https://astral.sh/uv/install.sh | sh
-source $HOME/.cargo/env
+source $HOME/.local/bin/env
 
 # 2. Clone this customization & run setup
 git clone https://github.com/hextrump/iseebi.git
