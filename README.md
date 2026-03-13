@@ -47,22 +47,18 @@ If you prefer to set up manually, please follow the [official Nanobot installati
 2. `cd nanobot && pip install -e .`
 3. Overwrite `nanobot/channels/telegram.py` with the one from this repo.
 
-### Configuration
-After installation, edit your environment variables:
-```bash
-nano /root/nanobot/.env
-```
-Fill in your API keys and ensure the default agent is set to Qwen:
+Fill in your API keys (Your DashScope Key will be used twice):
 ```bash
 # Enable Telegram
 NANOBOT_CHANNELS__TELEGRAM__ENABLED=true
 NANOBOT_CHANNELS__TELEGRAM__TOKEN=your_bot_token_here
 
-# DashScope (Qwen) Keys
-DASHSCOPE_API_KEY=your_api_key_here
-NANOBOT_PROVIDERS__OPENAI__API_KEY=your_api_key_here
+# DashScope (Qwen) Key - Paste the SAME key into both fields below
+DASHSCOPE_API_KEY=your_sk_key_here
+NANOBOT_PROVIDERS__OPENAI__API_KEY=your_sk_key_here
 
-# Force Qwen as the default agent
+# Internal Config (Pre-set by script)
+NANOBOT_PROVIDERS__OPENAI__API_BASE=https://dashscope.aliyuncs.com/compatible-mode/v1
 NANOBOT_AGENTS__DEFAULTS__MODEL=qwen-max
 NANOBOT_AGENTS__DEFAULTS__PROVIDER=openai
 ```

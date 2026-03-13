@@ -56,17 +56,18 @@ if [ ! -f ".env" ]; then
 # Enable the Telegram channel (MANDATORY)
 NANOBOT_CHANNELS__TELEGRAM__ENABLED=true
 
-# Your API Keys
+# Your API Keys (Get from https://dashscope.aliyun.com/)
 DASHSCOPE_API_KEY=your_api_key_here
-NANOBOT_CHANNELS__TELEGRAM__TOKEN=your_bot_token_here
 
-# Default Agent Settings (Forces Qwen for all interactions)
-NANOBOT_AGENTS__DEFAULTS__MODEL=qwen-max
-NANOBOT_AGENTS__DEFAULTS__PROVIDER=openai
+# Internal Mappings (Do not change unless you know what you are doing)
 NANOBOT_PROVIDERS__OPENAI__API_KEY=your_api_key_here
 NANOBOT_PROVIDERS__OPENAI__API_BASE=https://dashscope.aliyuncs.com/compatible-mode/v1
+NANOBOT_AGENTS__DEFAULTS__MODEL=qwen-max
+NANOBOT_AGENTS__DEFAULTS__PROVIDER=openai
 
-# Permissions & Group Policy
+# Telegram Config
+NANOBOT_CHANNELS__TELEGRAM__ENABLED=true
+NANOBOT_CHANNELS__TELEGRAM__TOKEN=your_bot_token_here
 NANOBOT_CHANNELS__TELEGRAM__ALLOW_FROM=["*"]
 NANOBOT_CHANNELS__TELEGRAM__GROUP_POLICY=open
 
