@@ -1,0 +1,13 @@
+# Nanobot Iseebi Patch Local Files
+deploy_multi_vps.sh
+nanobot_remote_copy/
+nanobot_src/
+remote_nanobot/
+task.md
+.git/
+.venv/
+__pycache__/
+*.log
+*.wav
+*.ogg
+.DS_Store
