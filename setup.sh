@@ -48,7 +48,7 @@ source .venv/bin/activate
 uv pip install -e .
 uv pip install httpx loguru python-telegram-bot pydantic-settings gitpython ffmpeg-python
 
-# 5. Configure .env
+# 5. Configure .env and global nanobot config
 if [ ! -f ".env" ]; then
     echo "⚠️ .env file not found. Creating a template..."
     cat <<EOF > .env
@@ -73,7 +73,23 @@ else
     fi
 fi
 
-# 6. Launch
+# 6. Global Nanobot Config (satisfies core startup check)
+mkdir -p ~/.nanobot
+if [ ! -f ~/.nanobot/config.json ]; then
+    echo "🛠️ Initializing global nanobot config..."
+    cat <<EOF > ~/.nanobot/config.json
+{
+  "providers": {
+    "openai": {
+      "api_key": "YOUR_API_KEY_HERE"
+    }
+  }
+}
+EOF
+    echo "✅ Created ~/.nanobot/config.json. (Core engine needs at least one key to start)"
+fi
+
+# 7. Launch
 echo "🔄 Starting Nanobot Gateway..."
 pkill -f "nanobot gateway" || true
 nohup .venv/bin/python -m nanobot gateway > nanobot.log 2>&1 &
