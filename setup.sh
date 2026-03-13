@@ -53,8 +53,12 @@ if [ ! -f ".env" ]; then
     echo "⚠️ .env file not found. Creating a template..."
     cat <<EOF > .env
 # --- Iseebi Japanese Tutor Settings ---
+# Enable the Telegram channel (MANDATORY)
+NANOBOT_CHANNELS__TELEGRAM__ENABLED=true
+
+# Your API Keys
 DASHSCOPE_API_KEY=your_api_key_here
-TELEGRAM_BOT_TOKEN=your_bot_token_here
+NANOBOT_CHANNELS__TELEGRAM__TOKEN=your_bot_token_here
 
 # Group Interaction Policy
 NANOBOT_CHANNELS__TELEGRAM__GROUP_POLICY=open
@@ -66,10 +70,12 @@ QWEN_TTS_LANGUAGE_TYPE=Japanese
 EOF
     echo "✅ Created .env template. PLEASE EDIT IT with your actual keys."
 else
-    # Ensure group policy is set to open
+    # Ensure channel is enabled and group policy is set to open
+    if ! grep -q "NANOBOT_CHANNELS__TELEGRAM__ENABLED=true" .env; then
+        echo "NANOBOT_CHANNELS__TELEGRAM__ENABLED=true" >> .env
+    fi
     if ! grep -q "NANOBOT_CHANNELS__TELEGRAM__GROUP_POLICY=open" .env; then
         echo "NANOBOT_CHANNELS__TELEGRAM__GROUP_POLICY=open" >> .env
-        echo "✅ Enabled open group policy in .env."
     fi
 fi
 

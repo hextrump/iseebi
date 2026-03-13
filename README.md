@@ -52,7 +52,7 @@ After installation, edit your environment variables:
 ```bash
 nano /root/nanobot/.env
 ```
-Fill in your `DASHSCOPE_API_KEY` and `TELEGRAM_BOT_TOKEN`, then restart:
+Fill in your `DASHSCOPE_API_KEY` and `NANOBOT_CHANNELS__TELEGRAM__TOKEN`, then restart:
 ```bash
 pkill -f "nanobot gateway"
 cd /root/nanobot && nohup .venv/bin/python -m nanobot gateway > nanobot.log 2>&1 &
