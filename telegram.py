@@ -437,8 +437,10 @@ class TelegramChannel(BaseChannel):
             return None
         body = {
             "model": model, 
-            "input": {"text": text},
-            "parameters": {"voice": voice}
+            "input": {
+                "text": text,
+                "voice": voice
+            }
         }
         try:
             async with httpx.AsyncClient() as client:
