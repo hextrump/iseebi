@@ -21,12 +21,16 @@ This repository is designed to be used as a "patch" on top of the official Nanob
 2. A Telegram Bot Token from [@BotFather](https://t.me/BotFather) (Ensure **Privacy Mode** is **Disabled**).
 3. A [DashScope (Aliyun)](https://dashscope.aliyun.com/) API Key for ASR/LLM/TTS.
 
-### Installation Steps
+## 📦 Installation
 
-Execute these three steps on your VPS:
+This project is a high-performance patch for [HKUDS/nanobot](https://github.com/HKUDS/nanobot).
+
+### 🚀 Standard Installation (Recommended)
+
+Execute these steps on your fresh VPS. This method uses `uv` for ultra-fast environment setup and automatically patches the official core.
 
 ```bash
-# 1. Install 'uv' (Fastest way to get Python running)
+# 1. Install 'uv' (Fastest way to get Python/Pip environment)
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source $HOME/.cargo/env
 
@@ -35,7 +39,13 @@ git clone https://github.com/hextrump/iseebi.git
 cd iseebi && bash setup.sh
 ```
 
-*(The `setup.sh` script will automatically clone the official HKUDS/nanobot engine and apply the Iseebi patch.)*
+*(Note: `setup.sh` will handle cloning the official `HKUDS/nanobot` and applying the Iseebi optimization.)*
+
+### 🛠️ Manual Installation (For developers)
+If you prefer to set up manually, please follow the [official Nanobot installation guide](https://github.com/HKUDS/nanobot#-install) first:
+1. `git clone https://github.com/HKUDS/nanobot.git`
+2. `cd nanobot && pip install -e .`
+3. Overwrite `nanobot/channels/telegram.py` with the one from this repo.
 
 ### Configuration
 After installation, edit your environment variables:
