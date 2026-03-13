@@ -436,10 +436,14 @@ class TelegramChannel(BaseChannel):
         if not api_key or not text.strip():
             return None
         body = {
-            "model": model, 
+            "model": model,
             "input": {
                 "text": text,
-                "voice": voice
+                "voice": voice,
+                "language_type": os.environ.get("QWEN_TTS_LANGUAGE_TYPE", "Japanese")
+            },
+            "parameters": {
+                "format": "wav"
             }
         }
         try:

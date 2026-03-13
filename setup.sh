@@ -74,6 +74,7 @@ NANOBOT_CHANNELS__TELEGRAM__GROUP_POLICY=open
 # Voice Engine Settings
 QWEN_TTS_MODEL=qwen3-tts-flash
 QWEN_TTS_VOICE=Cherry
+QWEN_TTS_LANGUAGE_TYPE=Japanese
 EOF
     echo "✅ Created .env template. PLEASE EDIT IT with your actual keys."
 else
