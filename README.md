@@ -52,7 +52,21 @@ After installation, edit your environment variables:
 ```bash
 nano /root/nanobot/.env
 ```
-Fill in your `DASHSCOPE_API_KEY` and `NANOBOT_CHANNELS__TELEGRAM__TOKEN`, then restart:
+Fill in your API keys and ensure the default agent is set to Qwen:
+```bash
+# Enable Telegram
+NANOBOT_CHANNELS__TELEGRAM__ENABLED=true
+NANOBOT_CHANNELS__TELEGRAM__TOKEN=your_bot_token_here
+
+# DashScope (Qwen) Keys
+DASHSCOPE_API_KEY=your_api_key_here
+NANOBOT_PROVIDERS__OPENAI__API_KEY=your_api_key_here
+
+# Force Qwen as the default agent
+NANOBOT_AGENTS__DEFAULTS__MODEL=qwen-max
+NANOBOT_AGENTS__DEFAULTS__PROVIDER=openai
+```
+Then restart:
 ```bash
 pkill -f "nanobot gateway"
 cd /root/nanobot && nohup .venv/bin/python -m nanobot gateway > nanobot.log 2>&1 &

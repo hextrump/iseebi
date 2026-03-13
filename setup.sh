@@ -60,6 +60,12 @@ NANOBOT_CHANNELS__TELEGRAM__ENABLED=true
 DASHSCOPE_API_KEY=your_api_key_here
 NANOBOT_CHANNELS__TELEGRAM__TOKEN=your_bot_token_here
 
+# Default Agent Settings (Forces Qwen for all interactions)
+NANOBOT_AGENTS__DEFAULTS__MODEL=qwen-max
+NANOBOT_AGENTS__DEFAULTS__PROVIDER=openai
+NANOBOT_PROVIDERS__OPENAI__API_KEY=your_api_key_here
+NANOBOT_PROVIDERS__OPENAI__API_BASE=https://dashscope.aliyuncs.com/compatible-mode/v1
+
 # Permissions & Group Policy
 NANOBOT_CHANNELS__TELEGRAM__ALLOW_FROM=["*"]
 NANOBOT_CHANNELS__TELEGRAM__GROUP_POLICY=open
@@ -91,7 +97,14 @@ if [ ! -f ~/.nanobot/config.json ]; then
 {
   "providers": {
     "openai": {
-      "api_key": "YOUR_API_KEY_HERE"
+      "api_key": "YOUR_API_KEY_HERE",
+      "api_base": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": "qwen-max",
+      "provider": "openai"
     }
   }
 }
