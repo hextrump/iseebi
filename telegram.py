@@ -150,6 +150,53 @@ def _markdown_to_telegram_html(text: str) -> str:
     return text
 
 
+class QwenTranscriptionProvider:
+    """Voice transcription provider using Qwen ASR via DashScope compatible mode."""
+
+    def __init__(self, api_key: str | None = None, model: str | None = None):
+        import os
+        self.api_key = api_key or os.environ.get("DASHSCOPE_API_KEY") or os.environ.get("QWEN_API_KEY")
+        self.model = model or os.environ.get("QWEN_ASR_MODEL", "qwen3-asr-flash-2026-02-10")
+        self.api_url = "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions"
+
+    async def transcribe(self, file_path: str | Path) -> str:
+        import httpx
+        from pathlib import Path
+        if not self.api_key:
+            logger.warning("Qwen API key not configured for transcription")
+            return ""
+        path = Path(file_path)
+        if not path.exists():
+            logger.error("Audio file not found: {}", file_path)
+            return ""
+        import base64
+        mime = "audio/ogg" if path.suffix.lower()==".ogg" else "audio/mpeg" if path.suffix.lower()==".mp3" else "audio/webm"
+        b64 = base64.b64encode(path.read_bytes()).decode()
+        data_uri = f"data:{mime};base64,{b64}"
+        body = {
+            "model": self.model,
+            "messages": [{"role":"user","content":[{"type":"input_audio","input_audio":{"data": data_uri}}]}],
+            "stream": False,
+            "asr_options": {"enable_itn": False}
+        }
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.post(self.api_url, headers={"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}, json=body, timeout=60.0)
+                response.raise_for_status()
+                data = response.json()
+                content = data.get("choices", [{}])[0].get("message", {}).get("content", "")
+                if isinstance(content, list):
+                    texts=[]
+                    for item in content:
+                        if isinstance(item, str): texts.append(item)
+                        elif isinstance(item, dict) and item.get("text"): texts.append(item["text"])
+                    return " ".join(texts).strip()
+                return str(content).strip()
+        except Exception as e:
+            logger.error("Qwen transcription error: {}", e)
+            return ""
+
+
 class TelegramChannel(BaseChannel):
     """
     Telegram channel using long polling.
@@ -663,7 +710,6 @@ class TelegramChannel(BaseChannel):
 
                 # Handle voice transcription and fast pipeline
                 if media_type == "voice" or media_type == "audio":
-                    from nanobot.providers.transcription import QwenTranscriptionProvider
                     transcriber = QwenTranscriptionProvider()
                     transcription = await transcriber.transcribe(file_path)
                     if transcription:
