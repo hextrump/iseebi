@@ -27,7 +27,7 @@ Execute these three commands on your VPS:
 
 ```bash
 # 1. Clone the official Nanobot engine
-git clone https://github.com/v8pai/nanobot.git
+git clone https://github.com/HKUDS/nanobot
 
 # 2. Clone this Iseebi customization
 git clone https://github.com/hextrump/iseebi.git
