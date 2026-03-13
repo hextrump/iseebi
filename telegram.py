@@ -435,7 +435,11 @@ class TelegramChannel(BaseChannel):
         voice = os.environ.get("QWEN_TTS_VOICE", "Cherry")
         if not api_key or not text.strip():
             return None
-        body = {"model": model, "input": {"text": text, "voice": voice}}
+        body = {
+            "model": model, 
+            "input": {"text": text},
+            "parameters": {"voice": voice}
+        }
         try:
             async with httpx.AsyncClient() as client:
                 resp = await client.post("https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation", headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}, json=body, timeout=60.0)
