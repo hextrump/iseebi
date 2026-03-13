@@ -60,7 +60,8 @@ NANOBOT_CHANNELS__TELEGRAM__ENABLED=true
 DASHSCOPE_API_KEY=your_api_key_here
 NANOBOT_CHANNELS__TELEGRAM__TOKEN=your_bot_token_here
 
-# Group Interaction Policy
+# Permissions & Group Policy
+NANOBOT_CHANNELS__TELEGRAM__ALLOW_FROM=["*"]
 NANOBOT_CHANNELS__TELEGRAM__GROUP_POLICY=open
 
 # Voice Engine Settings
@@ -73,6 +74,9 @@ else
     # Ensure channel is enabled and group policy is set to open
     if ! grep -q "NANOBOT_CHANNELS__TELEGRAM__ENABLED=true" .env; then
         echo "NANOBOT_CHANNELS__TELEGRAM__ENABLED=true" >> .env
+    fi
+    if ! grep -q "NANOBOT_CHANNELS__TELEGRAM__ALLOW_FROM" .env; then
+        echo 'NANOBOT_CHANNELS__TELEGRAM__ALLOW_FROM=["*"]' >> .env
     fi
     if ! grep -q "NANOBOT_CHANNELS__TELEGRAM__GROUP_POLICY=open" .env; then
         echo "NANOBOT_CHANNELS__TELEGRAM__GROUP_POLICY=open" >> .env
